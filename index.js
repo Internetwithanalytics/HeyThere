@@ -24,5 +24,5 @@ wss.on('connection', (ws) => {
 
 // Start the server on port 8080
 server.listen(8080, () => {
-  console.log('Server running on ws://internetwithanalytics.in:8080');
+  console.log('Server running on wss://internetwithanalytics.in:8080');
 });
