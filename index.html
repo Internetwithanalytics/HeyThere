@@ -5,6 +5,43 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" />
     <title>Rose Red or White</title>
+    <script>
+        var socket;
+
+        // Open WebSocket connection
+        function startWebSocket() {
+            socket = new WebSocket("ws://yourwebsite.com:8080"); // Change to your WebSocket server address
+
+            // Handle connection open
+            socket.onopen = function() {
+                console.log("Connected to WebSocket server!");
+                socket.send("Hello from browser!");
+            };
+
+            // Handle receiving message
+            socket.onmessage = function(event) {
+                console.log("Received: " + event.data);
+                document.getElementById("message").innerHTML = "Received: " + event.data;
+            };
+
+            // Handle error
+            socket.onerror = function(error) {
+                console.log("WebSocket error: " + error);
+            };
+
+            // Handle WebSocket close
+            socket.onclose = function() {
+                console.log("WebSocket connection closed.");
+            };
+        }
+
+        // Send message to WebSocket server
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+            socket.send(message);
+        }
+    </script>
+
 </head>
 
 <body>
@@ -27,5 +64,12 @@
             <span style="--i:3; left: -100px; transform:rotateZ(5deg) "></span>
             <span style="--i:4; left: -20px; transform: rotateZ(12deg) "></span>
     </div>
+
+    <button onclick="startWebSocket()">Connect to WebSocket</button>
+    <input type="text" id="messageInput" placeholder="Type message to send">
+    <button onclick="sendMessage()">Send Message</button>
+
+    <p id="message"></p>
+    
 </body>
 </html>
